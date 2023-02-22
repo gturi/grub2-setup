@@ -28,9 +28,6 @@ FONT_PATH="$FONTS_DIR/$FONT_FAMILY/$FONT_STYLE"
 
 GRUB_FILE=/etc/default/grub
 
-echo "creating a backup of the previous grub menu config"
-sudo cp $GRUB_FILE $GRUB_FILE.bak
-
 
 function get_grub_property_value {
   local PROPERTY="$1"
@@ -63,6 +60,3 @@ then
 else
   echo 'GRUB_TERMINAL_OUTPUT="gfxterm"' | sudo tee -a $GRUB_FILE > /dev/null
 fi
-
-
-sudo grub2-mkconfig -o /boot/grub2/grub.cfg
