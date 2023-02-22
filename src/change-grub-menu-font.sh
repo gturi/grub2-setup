@@ -1,5 +1,12 @@
 #!/bin/bash
 
+currentDir="$(dirname "$0")"
+
+cd "$currentDir" || exit
+
+source ../utils/set-grub-value.sh
+
+
 FONTS_DIR=/usr/share/fonts
 
 echo 'Select the font family to use for grub menu:'
@@ -39,24 +46,23 @@ function remove_quoting_symbol {
   echo "$WORD" | cut -d '"' -f 2
 }
 
+
 ORIGINAL_FONT_DIR="$(dirname "$(remove_quoting_symbol "$(get_grub_property_value "GRUB_FONT")")")"
 echo "detected original font dir: $ORIGINAL_FONT_DIR"
 
 
 echo "creating scaled version of the font"
+
 SCALED_FONT="$ORIGINAL_FONT_DIR/$FONT_NAME$FONT_SIZE.pf2"
 sudo grub2-mkfont -s "$FONT_SIZE" -o "$SCALED_FONT" "$FONT_PATH"
 
 
 echo "updating grub file font"
+
 SCALED_FONT_FOR_REGEX=$(echo "$SCALED_FONT" | sed 's/\//\\\//g' | sed 's/\./\\./g')
 sudo sed -i -e "/GRUB_FONT=/ s/=.*/=\"$SCALED_FONT_FOR_REGEX\"/" $GRUB_FILE
 
 
 echo "setting grub file terminal output to use gfxterm mode"
-if grep -q "GRUB_TERMINAL_OUTPUT=" $GRUB_FILE
-then
-  sudo sed -i -e "/GRUB_TERMINAL_OUTPUT=/ s/=.*/=\"gfxterm\"/" $GRUB_FILE
-else
-  echo 'GRUB_TERMINAL_OUTPUT="gfxterm"' | sudo tee -a $GRUB_FILE > /dev/null
-fi
+
+set_grub_property_value "GRUB_TERMINAL_OUTPUT" '"gfxterm"'
