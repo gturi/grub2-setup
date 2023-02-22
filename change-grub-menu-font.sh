@@ -33,17 +33,12 @@ sudo cp $GRUB_FILE $GRUB_FILE.bak
 
 
 function get_grub_property_value {
-  PROPERTY="$1"
-  grep "$PROPERTY" "$GRUB_FILE" | cut -d'=' -f2
-}
-
-function get_grub_property_value {
-  PROPERTY="$1"
+  local PROPERTY="$1"
   grep "$PROPERTY" "$GRUB_FILE" | cut -d'=' -f2
 }
 
 function remove_quoting_symbol {
-  WORD="$1"
+  local WORD="$1"
   echo "$WORD" | cut -d '"' -f 2
 }
 
