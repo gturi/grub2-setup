@@ -4,6 +4,7 @@ currentDir="$(dirname "$0")"
 
 cd "$currentDir" || exit
 
+source ../utils/get-grub-property.sh
 source ../utils/set-grub-property.sh
 
 
@@ -33,13 +34,6 @@ read -r FONT_SIZE
 FONT_NAME="${FONT_STYLE%.*}"
 FONT_PATH="$FONTS_DIR/$FONT_FAMILY/$FONT_STYLE"
 
-GRUB_FILE=/etc/default/grub
-
-
-function get_grub_property_value {
-  local PROPERTY="$1"
-  grep "$PROPERTY" "$GRUB_FILE" | cut -d'=' -f2
-}
 
 function remove_quoting_symbol {
   local WORD="$1"
@@ -47,7 +41,7 @@ function remove_quoting_symbol {
 }
 
 
-ORIGINAL_FONT_DIR="$(dirname "$(remove_quoting_symbol "$(get_grub_property_value "GRUB_FONT")")")"
+ORIGINAL_FONT_DIR="$(dirname "$(remove_quoting_symbol "$(get_grub_property "GRUB_FONT")")")"
 echo "detected original font dir: $ORIGINAL_FONT_DIR"
 
 
