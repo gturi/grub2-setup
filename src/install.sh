@@ -8,6 +8,8 @@ cd "$currentDir" || exit
 
 ./core/disable-auto-hide.sh
 
-./core/change-grub-menu-font.sh
+./core/change-font.sh
+
+./core/remember-last-choice.sh
 
 ./core/apply-changes.sh
