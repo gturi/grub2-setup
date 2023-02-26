@@ -4,7 +4,7 @@ currentDir="$(dirname "$0")"
 
 cd "$currentDir" || exit
 
-source ../utils/set-grub-value.sh
+source ../utils/set-grub-property.sh
 
 
 FONTS_DIR=/usr/share/fonts
@@ -65,4 +65,4 @@ sudo sed -i -e "/GRUB_FONT=/ s/=.*/=\"$SCALED_FONT_FOR_REGEX\"/" $GRUB_FILE
 
 echo "setting grub file terminal output to use gfxterm mode"
 
-set_grub_property_value "GRUB_TERMINAL_OUTPUT" '"gfxterm"'
+set_grub_property "GRUB_TERMINAL_OUTPUT" '"gfxterm"'

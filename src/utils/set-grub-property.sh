@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function set_grub_property_value {
+function set_grub_property {
   local KEY=$1
   local VALUE=$2
   local GRUB_FILE=/etc/default/grub
