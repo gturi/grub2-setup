@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function set_grub_property {
-  local KEY=$1
-  local VALUE=$2
+  local KEY="$1"
+  local VALUE="$2"
   local GRUB_FILE=/etc/default/grub
 
   if grep -q "$KEY=" $GRUB_FILE
