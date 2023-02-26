@@ -59,8 +59,9 @@ sudo grub2-mkfont -s "$FONT_SIZE" -o "$SCALED_FONT" "$FONT_PATH"
 
 echo "updating grub file font"
 
+# replace every / with \/ and then . with \.
 SCALED_FONT_FOR_REGEX=$(echo "$SCALED_FONT" | sed 's/\//\\\//g' | sed 's/\./\\./g')
-sudo sed -i -e "/GRUB_FONT=/ s/=.*/=\"$SCALED_FONT_FOR_REGEX\"/" $GRUB_FILE
+set_grub_property "GRUB_FONT" "\"$SCALED_FONT_FOR_REGEX\""
 
 
 echo "setting grub file terminal output to use gfxterm mode"
