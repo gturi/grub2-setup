@@ -1,21 +1,25 @@
-# change-grub-menu-font
+# grub2-setup
 
-Utility script to change grub2 menu font.
+Utility script to change grub2 menu default setup.
 
-Select font family, font style and font size and the script will update your default grub2 menu entry.
+It runs a collection of scripts that will:
+- disable menu autohide
+- change the font
+- remember last chosen entry
 
 ## Usage
 
 ```bash
-./change-grub-menu-font.sh
+./src/istall.sh
+
+# enable debug mode when installing
+TRACE=1 ./src/istall.sh
 ```
 
 The script will make a backup of your default grub file before making any change. If something goes wrong you can restore the previous grub configuration by running:
 
 ```bash
-sudo rm /boot/grub2/grub
-sudo mv /etc/default/grub.bak /etc/default/grub
-sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+./src/restore-grub-backup.sh
 ```
 
 ## License
