@@ -1,5 +1,12 @@
 #!/bin/bash
 
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then set -o xtrace; fi
+export SHELLOPTS
+
+
 currentDir="$(dirname "$0")"
 
 cd "$currentDir" || exit
