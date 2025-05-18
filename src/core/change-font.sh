@@ -41,21 +41,20 @@ function remove_quoting_symbol {
 }
 
 
-ORIGINAL_FONT_DIR="$(dirname "$(remove_quoting_symbol "$(get_grub_property "GRUB_FONT")")")"
-echo "detected original font dir: $ORIGINAL_FONT_DIR"
+GRUB_FONT_DIR=/boot/grub2/fonts
 
 
 echo "creating scaled version of the font"
 
-SCALED_FONT="$ORIGINAL_FONT_DIR/$FONT_NAME$FONT_SIZE.pf2"
+SCALED_FONT="$GRUB_FONT_DIR/$FONT_NAME-$FONT_SIZE.pf2"
+sudo mkdir -p "$GRUB_FONT_DIR"
 sudo grub2-mkfont -s "$FONT_SIZE" -o "$SCALED_FONT" "$FONT_PATH"
 
 
 echo "updating grub file font"
 
-# replace every / with \/ and then . with \.
-SCALED_FONT_FOR_REGEX=$(echo "$SCALED_FONT" | sed 's/\//\\\//g' | sed 's/\./\\./g')
-set_grub_property "GRUB_FONT" "\"$SCALED_FONT_FOR_REGEX\""
+# wrapping font into quotes just to be sure that there are no spaces
+set_grub_property "GRUB_FONT" "\"$SCALED_FONT\""
 
 
 echo "setting grub file terminal output to use gfxterm mode"
